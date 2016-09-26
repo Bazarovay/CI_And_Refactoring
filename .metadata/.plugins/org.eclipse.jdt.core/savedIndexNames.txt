@@ -1,0 +1,14 @@
+INDEX VERSION 1.126+/home/rafid/Downloads/Refactoring/ChessOOP-master/.metadata/.plugins/org.eclipse.jdt.core
+1268278602.index
+108432062.index
+110427687.index
+2933684288.index
+2222674079.index
+2758304405.index
+2002829007.index
+3051943469.index
+3821692589.index
+873805222.index
+4139950210.index
+615921886.index
+637265997.index

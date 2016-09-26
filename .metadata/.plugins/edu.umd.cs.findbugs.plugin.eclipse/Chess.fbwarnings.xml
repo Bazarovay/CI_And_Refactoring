@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<BugCollection version="3.0.1-dev-20150306-5afe4d1" sequence="1" timestamp="1474390719211" analysisTimestamp="1474390705644" release="">
+  <Project projectName="Chess">
+    <Jar>/home/rafid/Downloads/Refactoring/ChessOOP-master/bin</Jar>
+    <AuxClasspathEntry>/home/rafid/Downloads/Refactoring/ChessOOP-master/bin</AuxClasspathEntry>
+    <AuxClasspathEntry>/usr/lib/jvm/jdk1.7.0_79/jre/lib/rt.jar</AuxClasspathEntry>
+    <SrcDir>/home/rafid/Downloads/Refactoring/ChessOOP-master/src</SrcDir>
+    <Cloud id="edu.umd.cs.findbugs.cloud.doNothingCloud" online="false"></Cloud>
+  </Project>
+  <BugInstance type="CN_IDIOM" priority="2" rank="16" abbrev="CN" category="BAD_PRACTICE" first="1">
+    <Class classname="chess.Cell">
+      <SourceLine classname="chess.Cell" start="21" end="140" sourcefile="Cell.java" sourcepath="chess/Cell.java"/>
+    </Class>
+  </BugInstance>
+  <BugInstance type="DB_DUPLICATE_BRANCHES" priority="2" rank="17" abbrev="DB" category="STYLE" first="1">
+    <Class classname="chess.Cell">
+      <SourceLine classname="chess.Cell" sourcefile="Cell.java" sourcepath="chess/Cell.java"/>
+    </Class>
+    <Method classname="chess.Cell" name="removePiece" signature="()V" isStatic="false">
+      <SourceLine classname="chess.Cell" start="70" end="80" startBytecode="0" endBytecode="111" sourcefile="Cell.java" sourcepath="chess/Cell.java"/>
+    </Method>
+    <SourceLine classname="chess.Cell" start="72" end="73" startBytecode="10" endBytecode="23" sourcefile="Cell.java" sourcepath="chess/Cell.java"/>
+    <SourceLine classname="chess.Cell" start="77" end="78" startBytecode="26" endBytecode="36" sourcefile="Cell.java" sourcepath="chess/Cell.java"/>
+  </BugInstance>
+  <BugInstance type="MS_PKGPROTECT" priority="2" rank="18" abbrev="MS" category="MALICIOUS_CODE" first="1">
+    <Class classname="chess.Main">
+      <SourceLine classname="chess.Main" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    </Class>
+    <Field classname="chess.Main" name="Mainboard" signature="Lchess/Main;" isStatic="true">
+      <SourceLine classname="chess.Main" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="MS_PKGPROTECT" priority="2" rank="18" abbrev="MS" category="MALICIOUS_CODE" first="1">
+    <Class classname="chess.Main">
+      <SourceLine classname="chess.Main" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    </Class>
+    <Field classname="chess.Main" name="timeRemaining" signature="I" isStatic="true">
+      <SourceLine classname="chess.Main" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    </Field>
+    <SourceLine classname="chess.Main" start="73" end="73" startBytecode="2" endBytecode="2" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+  </BugInstance>
+  <BugInstance type="NM_FIELD_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" first="1">
+    <Class classname="chess.Main">
+      <SourceLine classname="chess.Main" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    </Class>
+    <Field classname="chess.Main" name="Mainboard" signature="Lchess/Main;" isStatic="true">
+      <SourceLine classname="chess.Main" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" priority="1" rank="15" abbrev="ST" category="STYLE" first="1">
+    <Class classname="chess.Main">
+      <SourceLine classname="chess.Main" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    </Class>
+    <Method classname="chess.Main" name="changechance" signature="()V" isStatic="false">
+      <SourceLine classname="chess.Main" start="302" end="325" startBytecode="0" endBytecode="307" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    </Method>
+    <Field classname="chess.Main" name="move" signature="Ljava/lang/String;" isStatic="true">
+      <SourceLine classname="chess.Main" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    </Field>
+    <SourceLine classname="chess.Main" start="319" end="319" startBytecode="145" endBytecode="145" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    <SourceLine classname="chess.Main" start="319" end="319" startBytecode="145" endBytecode="145" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+  </BugInstance>
+  <BugInstance type="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" priority="2" rank="17" abbrev="ST" category="STYLE" first="1">
+    <Class classname="chess.Main">
+      <SourceLine classname="chess.Main" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    </Class>
+    <Method classname="chess.Main" name="&lt;init&gt;" signature="()V" isStatic="false">
+      <SourceLine classname="chess.Main" start="108" end="296" startBytecode="0" endBytecode="3081" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    </Method>
+    <Field classname="chess.Main" name="move" signature="Ljava/lang/String;" isStatic="true">
+      <SourceLine classname="chess.Main" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    </Field>
+    <SourceLine classname="chess.Main" start="112" end="112" startBytecode="196" endBytecode="196" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    <SourceLine classname="chess.Main" start="112" end="112" startBytecode="196" endBytecode="196" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+  </BugInstance>
+  <BugInstance type="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" priority="2" rank="17" abbrev="ST" category="STYLE" first="1">
+    <Class classname="chess.Main">
+      <SourceLine classname="chess.Main" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    </Class>
+    <Method classname="chess.Main" name="&lt;init&gt;" signature="()V" isStatic="false">
+      <SourceLine classname="chess.Main" start="108" end="296" startBytecode="0" endBytecode="3081" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    </Method>
+    <Field classname="chess.Main" name="timeRemaining" signature="I" isStatic="true">
+      <SourceLine classname="chess.Main" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    </Field>
+    <SourceLine classname="chess.Main" start="110" end="110" startBytecode="179" endBytecode="179" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    <SourceLine classname="chess.Main" start="110" end="110" startBytecode="179" endBytecode="179" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+  </BugInstance>
+  <BugInstance type="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" priority="2" rank="17" abbrev="ST" category="STYLE" first="1">
+    <Class classname="chess.Main">
+      <SourceLine classname="chess.Main" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    </Class>
+    <Method classname="chess.Main" name="gameend" signature="()V" isStatic="false">
+      <SourceLine classname="chess.Main" start="467" end="506" startBytecode="0" endBytecode="494" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    </Method>
+    <Field classname="chess.Main" name="Mainboard" signature="Lchess/Main;" isStatic="true">
+      <SourceLine classname="chess.Main" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    </Field>
+    <SourceLine classname="chess.Main" start="503" end="503" startBytecode="292" endBytecode="292" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    <SourceLine classname="chess.Main" start="503" end="503" startBytecode="292" endBytecode="292" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+  </BugInstance>
+  <BugInstance type="UC_USELESS_OBJECT" priority="2" rank="17" abbrev="UC" category="STYLE" first="1">
+    <Class classname="chess.Main">
+      <SourceLine classname="chess.Main" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    </Class>
+    <Method classname="chess.Main" name="checkmate" signature="(I)Z" isStatic="false">
+      <SourceLine classname="chess.Main" start="445" end="460" startBytecode="0" endBytecode="295" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+    </Method>
+    <String value="dlist"/>
+    <Type descriptor="Ljava/util/ArrayList;">
+      <SourceLine classname="java.util.ArrayList" start="102" end="966" sourcefile="ArrayList.java" sourcepath="java/util/ArrayList.java"/>
+    </Type>
+    <SourceLine classname="chess.Main" start="445" end="445" startBytecode="4" endBytecode="4" sourcefile="Main.java" sourcepath="chess/Main.java"/>
+  </BugInstance>
+  <BugInstance type="DM_EXIT" priority="2" rank="16" abbrev="Dm" category="BAD_PRACTICE" first="1">
+    <Class classname="chess.Player">
+      <SourceLine classname="chess.Player" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+    </Class>
+    <Method classname="chess.Player" name="Update_Player" signature="()V" isStatic="false">
+      <SourceLine classname="chess.Player" start="122" end="195" startBytecode="0" endBytecode="894" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+    </Method>
+    <SourceLine classname="chess.Player" start="134" end="134" startBytecode="98" endBytecode="98" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+    <SourceLine classname="chess.Player" start="134" end="134" startBytecode="98" endBytecode="98" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+  </BugInstance>
+  <BugInstance type="DM_NUMBER_CTOR" priority="2" rank="18" abbrev="Bx" category="PERFORMANCE" first="1">
+    <Class classname="chess.Player">
+      <SourceLine classname="chess.Player" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+    </Class>
+    <Method classname="chess.Player" name="&lt;init&gt;" signature="(Ljava/lang/String;)V" isStatic="false">
+      <SourceLine classname="chess.Player" start="31" end="37" startBytecode="0" endBytecode="104" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+    </Method>
+    <Method classname="java.lang.Integer" name="&lt;init&gt;" signature="(I)V" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.lang.Integer" start="659" end="661" startBytecode="0" endBytecode="41" sourcefile="Integer.java" sourcepath="java/lang/Integer.java"/>
+    </Method>
+    <Method classname="java.lang.Integer" name="valueOf" signature="(I)Ljava/lang/Integer;" isStatic="true" role="SHOULD_CALL">
+      <SourceLine classname="java.lang.Integer" start="639" end="642" startBytecode="0" endBytecode="99" sourcefile="Integer.java" sourcepath="java/lang/Integer.java"/>
+    </Method>
+    <SourceLine classname="chess.Player" start="35" end="35" startBytecode="18" endBytecode="18" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+    <SourceLine classname="chess.Player" start="35" end="35" startBytecode="18" endBytecode="18" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+  </BugInstance>
+  <BugInstance type="DM_NUMBER_CTOR" priority="2" rank="18" abbrev="Bx" category="PERFORMANCE" first="1">
+    <Class classname="chess.Player">
+      <SourceLine classname="chess.Player" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+    </Class>
+    <Method classname="chess.Player" name="winpercent" signature="()Ljava/lang/Integer;" isStatic="false">
+      <SourceLine classname="chess.Player" start="60" end="60" startBytecode="0" endBytecode="67" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+    </Method>
+    <Method classname="java.lang.Integer" name="&lt;init&gt;" signature="(I)V" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.lang.Integer" start="659" end="661" startBytecode="0" endBytecode="41" sourcefile="Integer.java" sourcepath="java/lang/Integer.java"/>
+    </Method>
+    <Method classname="java.lang.Integer" name="valueOf" signature="(I)Ljava/lang/Integer;" isStatic="true" role="SHOULD_CALL">
+      <SourceLine classname="java.lang.Integer" start="639" end="642" startBytecode="0" endBytecode="99" sourcefile="Integer.java" sourcepath="java/lang/Integer.java"/>
+    </Method>
+    <SourceLine classname="chess.Player" start="60" end="60" startBytecode="22" endBytecode="22" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+    <SourceLine classname="chess.Player" start="60" end="60" startBytecode="22" endBytecode="22" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+  </BugInstance>
+  <BugInstance type="IO_APPENDING_TO_OBJECT_OUTPUT_STREAM" priority="1" rank="5" abbrev="IO" category="CORRECTNESS" first="1">
+    <Class classname="chess.Player">
+      <SourceLine classname="chess.Player" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+    </Class>
+    <Method classname="chess.Player" name="Update_Player" signature="()V" isStatic="false">
+      <SourceLine classname="chess.Player" start="122" end="195" startBytecode="0" endBytecode="894" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+    </Method>
+    <SourceLine classname="chess.Player" start="143" end="143" startBytecode="137" endBytecode="137" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+  </BugInstance>
+  <BugInstance type="NP_NULL_ON_SOME_PATH_EXCEPTION" priority="2" rank="11" abbrev="NP" category="CORRECTNESS" first="1">
+    <Class classname="chess.Player">
+      <SourceLine classname="chess.Player" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+    </Class>
+    <Method classname="chess.Player" name="fetch_players" signature="()Ljava/util/ArrayList;" isStatic="true">
+      <SourceLine classname="chess.Player" start="79" end="117" startBytecode="0" endBytecode="504" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+    </Method>
+    <LocalVariable name="input" register="1" pc="56" role="LOCAL_VARIABLE_VALUE_OF"/>
+    <SourceLine classname="chess.Player" start="106" end="106" startBytecode="102" endBytecode="102" sourcefile="Player.java" sourcepath="chess/Player.java" role="SOURCE_LINE_DEREF"/>
+    <SourceLine classname="chess.Player" start="79" end="79" startBytecode="0" endBytecode="0" sourcefile="Player.java" sourcepath="chess/Player.java" role="SOURCE_LINE_NULL_VALUE"/>
+    <SourceLine classname="chess.Player" start="84" end="84" startBytecode="59" endBytecode="59" sourcefile="Player.java" sourcepath="chess/Player.java" role="SOURCE_LINE_KNOWN_NULL"/>
+    <Property name="edu.umd.cs.findbugs.detect.NullDerefProperty.ALWAYS_ON_EXCEPTION_PATH" value="true"/>
+    <Property name="edu.umd.cs.findbugs.detect.NullDerefProperty.LONG_RANGE_NULL_SOURCE" value="true"/>
+  </BugInstance>
+  <BugInstance type="RV_RETURN_VALUE_IGNORED_BAD_PRACTICE" priority="2" rank="16" abbrev="RV" category="BAD_PRACTICE" first="1">
+    <Class classname="chess.Player">
+      <SourceLine classname="chess.Player" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+    </Class>
+    <Method classname="chess.Player" name="Update_Player" signature="()V" isStatic="false">
+      <SourceLine classname="chess.Player" start="122" end="195" startBytecode="0" endBytecode="894" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+    </Method>
+    <Method classname="java.io.File" name="createNewFile" signature="()Z" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.io.File" start="1001" end="1006" startBytecode="0" endBytecode="98" sourcefile="File.java" sourcepath="java/io/File.java"/>
+    </Method>
+    <SourceLine classname="chess.Player" start="140" end="140" startBytecode="111" endBytecode="111" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+    <SourceLine classname="chess.Player" start="140" end="140" startBytecode="111" endBytecode="111" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+  </BugInstance>
+  <BugInstance type="RV_RETURN_VALUE_IGNORED_BAD_PRACTICE" priority="2" rank="16" abbrev="RV" category="BAD_PRACTICE" first="1">
+    <Class classname="chess.Player">
+      <SourceLine classname="chess.Player" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+    </Class>
+    <Method classname="chess.Player" name="Update_Player" signature="()V" isStatic="false">
+      <SourceLine classname="chess.Player" start="122" end="195" startBytecode="0" endBytecode="894" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+    </Method>
+    <Method classname="java.io.File" name="delete" signature="()Z" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.io.File" start="1028" end="1035" startBytecode="0" endBytecode="91" sourcefile="File.java" sourcepath="java/io/File.java"/>
+    </Method>
+    <SourceLine classname="chess.Player" start="171" end="171" startBytecode="245" endBytecode="245" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+    <SourceLine classname="chess.Player" start="171" end="171" startBytecode="245" endBytecode="245" sourcefile="Player.java" sourcepath="chess/Player.java"/>
+  </BugInstance>
+  <Errors errors="0" missingClasses="0"></Errors>
+  <FindBugsSummary timestamp="Sun, 18 Sep 2016 22:43:29 +0500" total_classes="17" referenced_classes="354" total_bugs="17" total_size="1256" num_packages="2" java_version="1.7.0_79" vm_version="24.79-b02" cpu_seconds="36.90" clock_seconds="13.58" peak_mbytes="310.78" alloc_mbytes="455.00" gc_seconds="0.44" priority_2="15" priority_1="2">
+    <PackageStats package="chess" total_bugs="17" total_types="10" total_size="881" priority_2="15" priority_1="2">
+      <ClassStats class="chess.Cell" sourceFile="Cell.java" interface="false" size="82" bugs="2" priority_2="2"/>
+      <ClassStats class="chess.Main" sourceFile="Main.java" interface="false" size="538" bugs="8" priority_2="7" priority_1="1"/>
+      <ClassStats class="chess.Main$1" sourceFile="Main.java" interface="false" size="12" bugs="0"/>
+      <ClassStats class="chess.Main$Handler" sourceFile="Main.java" interface="false" size="36" bugs="0"/>
+      <ClassStats class="chess.Main$START" sourceFile="Main.java" interface="false" size="32" bugs="0"/>
+      <ClassStats class="chess.Main$SelectHandler" sourceFile="Main.java" interface="false" size="50" bugs="0"/>
+      <ClassStats class="chess.Main$TimeChange" sourceFile="Main.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="chess.Player" sourceFile="Player.java" interface="false" size="91" bugs="7" priority_2="6" priority_1="1"/>
+      <ClassStats class="chess.Time" sourceFile="Time.java" interface="false" size="18" bugs="0"/>
+      <ClassStats class="chess.Time$CountdownTimerListener" sourceFile="Time.java" interface="false" size="15" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="pieces" total_bugs="0" total_types="7" total_size="375">
+      <ClassStats class="pieces.Bishop" sourceFile="Bishop.java" interface="false" size="50" bugs="0"/>
+      <ClassStats class="pieces.King" sourceFile="King.java" interface="false" size="117" bugs="0"/>
+      <ClassStats class="pieces.Knight" sourceFile="Knight.java" interface="false" size="16" bugs="0"/>
+      <ClassStats class="pieces.Pawn" sourceFile="Pawn.java" interface="false" size="33" bugs="0"/>
+      <ClassStats class="pieces.Piece" sourceFile="Piece.java" interface="false" size="27" bugs="0"/>
+      <ClassStats class="pieces.Queen" sourceFile="Queen.java" interface="false" size="86" bugs="0"/>
+      <ClassStats class="pieces.Rook" sourceFile="Rook.java" interface="false" size="46" bugs="0"/>
+    </PackageStats>
+    <FindBugsProfile>
+      <ClassProfile name="de.tobject.findbugs.builder.FindBugs2Eclipse" totalMilliseconds="1180" invocations="2" avgMicrosecondsPerInvocation="590278" maxMicrosecondsPerInvocation="716232" standardDeviationMircosecondsPerInvocation="125952"/>
+      <ClassProfile name="edu.umd.cs.findbugs.OpcodeStack$JumpInfoFactory" totalMilliseconds="1023" invocations="842" avgMicrosecondsPerInvocation="1215" maxMicrosecondsPerInvocation="329423" standardDeviationMircosecondsPerInvocation="11396"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassDataAnalysisEngine" totalMilliseconds="1015" invocations="1582" avgMicrosecondsPerInvocation="642" maxMicrosecondsPerInvocation="39343" standardDeviationMircosecondsPerInvocation="2680"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="989" invocations="1579" avgMicrosecondsPerInvocation="626" maxMicrosecondsPerInvocation="31478" standardDeviationMircosecondsPerInvocation="1660"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNoSideEffectMethods" totalMilliseconds="978" invocations="354" avgMicrosecondsPerInvocation="2764" maxMicrosecondsPerInvocation="57650" standardDeviationMircosecondsPerInvocation="5929"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FieldItemSummary" totalMilliseconds="931" invocations="354" avgMicrosecondsPerInvocation="2630" maxMicrosecondsPerInvocation="39137" standardDeviationMircosecondsPerInvocation="5020"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ValueNumberDataflowFactory" totalMilliseconds="588" invocations="129" avgMicrosecondsPerInvocation="4560" maxMicrosecondsPerInvocation="67647" standardDeviationMircosecondsPerInvocation="12335"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.UnconditionalValueDerefDataflowFactory" totalMilliseconds="476" invocations="121" avgMicrosecondsPerInvocation="3940" maxMicrosecondsPerInvocation="132480" standardDeviationMircosecondsPerInvocation="13965"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.IsNullValueDataflowFactory" totalMilliseconds="415" invocations="121" avgMicrosecondsPerInvocation="3434" maxMicrosecondsPerInvocation="62159" standardDeviationMircosecondsPerInvocation="9178"/>
+      <ClassProfile name="edu.umd.cs.findbugs.ba.npe.NullDerefAndRedundantComparisonFinder" totalMilliseconds="371" invocations="121" avgMicrosecondsPerInvocation="3067" maxMicrosecondsPerInvocation="48909" standardDeviationMircosecondsPerInvocation="7323"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.TypeDataflowFactory" totalMilliseconds="368" invocations="127" avgMicrosecondsPerInvocation="2899" maxMicrosecondsPerInvocation="48304" standardDeviationMircosecondsPerInvocation="7760"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.BuildObligationPolicyDatabase" totalMilliseconds="266" invocations="354" avgMicrosecondsPerInvocation="751" maxMicrosecondsPerInvocation="8567" standardDeviationMircosecondsPerInvocation="1127"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteDirectlyRelevantTypeQualifiers" totalMilliseconds="264" invocations="354" avgMicrosecondsPerInvocation="746" maxMicrosecondsPerInvocation="18285" standardDeviationMircosecondsPerInvocation="1547"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindRefComparison$SpecialTypeAnalysis" totalMilliseconds="202" invocations="56" avgMicrosecondsPerInvocation="3614" maxMicrosecondsPerInvocation="40882" standardDeviationMircosecondsPerInvocation="7017"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.ExplicitSerialization" totalMilliseconds="191" invocations="354" avgMicrosecondsPerInvocation="540" maxMicrosecondsPerInvocation="38247" standardDeviationMircosecondsPerInvocation="3037"/>
+    </FindBugsProfile>
+  </FindBugsSummary>
+  <ClassFeatures></ClassFeatures>
+  <History>
+    <AppVersion sequence="0" timestamp="1474390719202" release="" codeSize="0" numClasses="0"/>
+  </History>
+</BugCollection>
