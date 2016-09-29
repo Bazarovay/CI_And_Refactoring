@@ -54,28 +54,28 @@ public class Cell extends JPanel implements Cloneable{
 			setPiece(cell.getpiece().getcopy());
 		}
 		else
-			piece=null;
+			this.piece=null;
 	}
 	
 	public void setPiece(Piece p)    //Function to inflate a cell with a piece
 	{
-		piece=p;
-		ImageIcon img=new javax.swing.ImageIcon(this.getClass().getResource(p.getPath()));
-		content=new JLabel(img);
-		this.add(content);
+		this.piece=p;
+		ImageIcon img = new ImageIcon(this.getClass().getResource(p.getPath()));
+		this.content=new JLabel(img);
+		this.add(this.content);
 	}
 	
 	public void removePiece()      //Function to remove a piece from the cell
 	{
-		if (piece instanceof King)
+		if (this.piece instanceof King)
 		{
-			piece=null;
-			this.remove(content);
+			this.piece=null;
+			this.remove(this.content);
 		}
 		else
 		{
-			piece=null;
-			this.remove(content);
+			this.piece=null;
+			this.remove(this.content);
 		}
 	}
 	
@@ -128,15 +128,17 @@ public class Cell extends JPanel implements Cloneable{
 	public void removecheck()   //Function to deselect check
 	{
 		this.setBorder(null);
-		if((x+y)%2==0)
+		if((x+y)%2==0) {
 			setBackground(new Color(113,198,113));
-		else
+		}
+		else {
 			setBackground(Color.white);
+		}
 		this.ischeck=false;
 	}
 	
 	public boolean ischeck()    //Function to check if the current cell is in check
 	{
-		return ischeck;
+		return this.ischeck;
 	}
 }
