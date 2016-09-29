@@ -28,8 +28,7 @@ public class Bishop extends Piece{
 		//Bishop can Move diagonally in all 4 direction (NW,NE,SW,SE)
 		//This function defines that logic
 		possiblemoves.clear();
-		int tempx=x+1;
-		int tempy=y-1;
+		int tempx=x+1,tempy=y-1;
 		while(tempx<8&&tempy>=0)
 		{
 			if(state[tempx][tempy].getpiece()==null)
