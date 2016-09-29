@@ -138,12 +138,12 @@ public class Main extends JFrame implements MouseListener
 		wplayer= Player.fetch_players();
 		Iterator<Player> witr=wplayer.iterator();
 		while(witr.hasNext())
-			Wnames.add(witr.next().name());
+			Wnames.add(witr.next().getPlayerName());
 				
 		bplayer= Player.fetch_players();
 		Iterator<Player> bitr=bplayer.iterator();
 		while(bitr.hasNext())
-			Bnames.add(bitr.next().name());
+			Bnames.add(bitr.next().getPlayerName());
 	    WNames=Wnames.toArray(WNames);	
 		BNames=Bnames.toArray(BNames);
 		
@@ -472,13 +472,13 @@ public class Main extends JFrame implements MouseListener
     	if(chance==0)
 		{	White.updateGamesWon();
 			White.Update_Player();
-			winner=White.name();
+			winner=White.getPlayerName();
 		}
 		else
 		{
 			Black.updateGamesWon();
 			Black.Update_Player();
-			winner=Black.name();
+			winner=Black.getPlayerName();
 		}
 		JOptionPane.showMessageDialog(board,"Checkmate!!!\n"+winner+" wins");
 		WhitePlayer.remove(wdetails);
@@ -709,14 +709,14 @@ public class Main extends JFrame implements MouseListener
 				while(it.hasNext())
 				{	
 					Player p=it.next();
-					if(p.name().equals(n))
+					if(p.getPlayerName().equals(n))
 						{tempPlayer=p;
 						break;}
 				}
 				while(oit.hasNext())
 				{	
 					Player p=oit.next();
-					if(p.name().equals(n))
+					if(p.getPlayerName().equals(n))
 						{opl.remove(p);
 						break;}
 				}
@@ -730,10 +730,10 @@ public class Main extends JFrame implements MouseListener
 				bplayer=opl;
 				ojc.removeAllItems();
 				for (Player s:opl)
-					ojc.addItem(s.name());
-				det.add(new JLabel(" "+tempPlayer.name()));
-				det.add(new JLabel(" "+tempPlayer.gamesplayed()));
-				det.add(new JLabel(" "+tempPlayer.gameswon()));
+					ojc.addItem(s.getPlayerName());
+				det.add(new JLabel(" "+tempPlayer.getPlayerName()));
+				det.add(new JLabel(" "+tempPlayer.numOfGamesPlayed()));
+				det.add(new JLabel(" "+tempPlayer.numOfGamesWon()));
 				
 				PL.revalidate();
 				PL.repaint();
@@ -766,7 +766,7 @@ public class Main extends JFrame implements MouseListener
 					
 					while(it.hasNext())
 					{
-						if(it.next().name().equals(n))
+						if(it.next().getPlayerName().equals(n))
 						{JOptionPane.showMessageDialog(j,"Player exists");
 						return;}
 					}
