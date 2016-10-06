@@ -2,7 +2,7 @@ package pieces;
 
 import java.util.ArrayList;
 
-import chess.Cell;
+import chess.ChessboardCell;
 
 
 /**
@@ -17,8 +17,8 @@ public abstract class Piece implements Cloneable{
 	private int color;
 	private String id=null;
 	private String path;
-	protected ArrayList<Cell> possiblemoves = new ArrayList<Cell>();  //Protected (access from child classes)
-	public abstract ArrayList<Cell> move(Cell pos[][],int x,int y);  //Abstract Function. Must be overridden
+	protected ArrayList<ChessboardCell> possiblemoves = new ArrayList<ChessboardCell>();  //Protected (access from child classes)
+	public abstract ArrayList<ChessboardCell> move(ChessboardCell pos[][],int x,int y);  //Abstract Function. Must be overridden
 	
 	//Id Setter
 	public void setId(String id)

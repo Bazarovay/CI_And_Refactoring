@@ -2,7 +2,7 @@ package pieces;
 
 import java.util.ArrayList;
 
-import chess.Cell;
+import chess.ChessboardCell;
 
 /**
  * This is the Rook class inherited from abstract Piece class
@@ -19,7 +19,7 @@ public class Rook extends Piece{
 	}
 	
 	//Move function defined
-	public ArrayList<Cell> move(Cell state[][],int x,int y)
+	public ArrayList<ChessboardCell> move(ChessboardCell state[][],int x,int y)
 	{
 		//Rook can move only horizontally or vertically
 		possiblemoves.clear();

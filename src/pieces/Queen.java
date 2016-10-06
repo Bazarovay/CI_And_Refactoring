@@ -2,7 +2,7 @@ package pieces;
 
 import java.util.ArrayList;
 
-import chess.Cell;
+import chess.ChessboardCell;
 
 /**
  * This is the Queen Class inherited from the abstract Piece class
@@ -19,7 +19,7 @@ public class Queen extends Piece{
 	}
 	
 	//Move Function Defined
-	public ArrayList<Cell> move(Cell state[][],int x,int y)
+	public ArrayList<ChessboardCell> move(ChessboardCell state[][],int x,int y)
 	{
 		//Queen has most number of possible moves
 		//Queen can move any number of steps in all 8 direction

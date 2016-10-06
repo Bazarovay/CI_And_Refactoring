@@ -26,50 +26,45 @@ public class Player implements Serializable{
 	private String name;
 	private Integer gamesplayed;
 	private Integer gameswon;
-	
-	//Constructor
-	public Player(String name)
-	{
+	private static final String PLAYER_FILE_NAME = "chessgamedata.dat"; //$NON-NLS-1$
+	private static final String USER_DIRECTORY = "user.dir"; //$NON-NLS-1$
+	private static final String TEMPORARY_FILE = "tempfile.dat"; //$NON-NLS-1$
+
+
+	public Player(String name) {
 		this.name = name.trim();
-		//this.lname = lname.trim();
-		gamesplayed = new Integer(0);
-		gameswon = new Integer(0);
+		this.gamesplayed = Integer.valueOf(0);
+		this.gameswon = Integer.valueOf(0);
 	}
 	
-	//Name Getter
-	public String name()
+	public String getPlayerName()
 	{
-		return name;
+		return this.name;
 	}
 	
-	//Returns the number of games played
-	public Integer gamesplayed()
+	public Integer getGamesPlayed()
 	{
-		return gamesplayed;
+		return this.gamesplayed;
 	}
 	
-	//Returns the number of games won
-	public Integer gameswon()
+	public Integer getGamesWon()
 	{
-		return gameswon;
+		return this.gameswon;
 	}
 	
-	//Calculates the win percentage of the player
-	public Integer winpercent()
+	public Integer getWinPercentage()
 	{
-		return new Integer((gameswon*100)/gamesplayed);
+		return Integer.valueOf((this.gameswon*100)/this.gamesplayed);
 	}
 	
-	//Increments the number of games played
-	public void updateGamesPlayed()
+	public void incrementGamesPlayed()
 	{
-		gamesplayed++;
+		this.gamesplayed++;
 	}
 	
-	//Increments the number of games won
-	public void updateGamesWon()
+	public void incrementGamesWon()
 	{
-		gameswon++;
+		this.gameswon++;
 	}
 	
 	
@@ -80,7 +75,7 @@ public class Player implements Serializable{
 		ArrayList<Player> players = new ArrayList<Player>();
 		try
 		{
-			File infile = new File(System.getProperty("user.dir")+ File.separator + "chessgamedata.dat");
+			File infile = new File(System.getProperty(USER_DIRECTORY)+ File.separator + PLAYER_FILE_NAME);
 			input = new ObjectInputStream(new FileInputStream(infile));
 			try
 			{
@@ -103,15 +98,22 @@ public class Player implements Serializable{
 		catch (IOException e)
 		{
 			e.printStackTrace();
-			try {input.close();} catch (IOException e1) {}
-			JOptionPane.showMessageDialog(null, "Unable to read the required Game files !!");
+			try {
+				if (null != input) {
+					input.close();
+				}
+
+				} catch (IOException e1)
+				{
+					e1.printStackTrace();
+				}
+			JOptionPane.showMessageDialog(null, "Unable to read the required Game files !!"); //$NON-NLS-1$
 		}
 		catch (ClassNotFoundException e) 
 		{
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Game Data File Corrupted !! Click Ok to Continue Builing New File");
+			JOptionPane.showMessageDialog(null, "Game Data File Corrupted !! Click Ok to Continue Builing New File"); //$NON-NLS-1$
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		return players;
@@ -126,37 +128,38 @@ public class Player implements Serializable{
 		File outputfile=null;
 		try
 		{
-			inputfile = new File(System.getProperty("user.dir")+ File.separator + "chessgamedata.dat");
-			outputfile = new File(System.getProperty("user.dir")+ File.separator + "tempfile.dat");
+			inputfile = new File(System.getProperty(USER_DIRECTORY)+ File.separator + PLAYER_FILE_NAME);
+			outputfile = new File(System.getProperty(USER_DIRECTORY)+ File.separator + TEMPORARY_FILE);
 		} catch (SecurityException e)
 		{
-			JOptionPane.showMessageDialog(null, "Read-Write Permission Denied !! Program Cannot Start");
+			JOptionPane.showMessageDialog(null, "Read-Write Permission Denied !! Program Cannot Start"); //$NON-NLS-1$
 			System.exit(0);
-		} 
-		boolean playerdonotexist;
+			
+		}
+		
+		boolean playerDoesNotExist;
+		
 		try
 		{
-			if(outputfile.exists()==false)
+			if((null != outputfile) && outputfile.exists() == false) {
 				outputfile.createNewFile();
-			if(inputfile.exists()==false)
-			{
-					output = new ObjectOutputStream(new java.io.FileOutputStream(outputfile,true));
-					output.writeObject(this);
 			}
-			else
-			{
+			
+			if((null != inputfile) && inputfile.exists()==false) {
+					FileOutputStream stream = new FileOutputStream(outputfile);
+					output = new ObjectOutputStream(stream);
+					output.writeObject(this);
+			} else {
 				input = new ObjectInputStream(new FileInputStream(inputfile));
 				output = new ObjectOutputStream(new FileOutputStream(outputfile));
-				playerdonotexist=true;
-				try
-				{
-				while(true)
-				{
+				playerDoesNotExist=true;
+				try {
+				while(true) {
 					temp_player = (Player)input.readObject();
-					if (temp_player.name().equals(name()))
+					if (temp_player.getPlayerName().equals(getPlayerName()))
 					{
 						output.writeObject(this);
-						playerdonotexist = false;
+						playerDoesNotExist = false;
 					}
 					else
 						output.writeObject(temp_player);
@@ -165,32 +168,33 @@ public class Player implements Serializable{
 				catch(EOFException e){
 					input.close();
 				}
-				if(playerdonotexist)
+				if(playerDoesNotExist) {
 					output.writeObject(this);
+				}
 			}
-			inputfile.delete();
+
+				inputfile.delete();
+
 			output.close();
-			File newf = new File(System.getProperty("user.dir")+ File.separator + "chessgamedata.dat");
-			if(outputfile.renameTo(newf)==false)
-				System.out.println("File Renameing Unsuccessful");
+			File newf = new File(System.getProperty(USER_DIRECTORY)+ File.separator + PLAYER_FILE_NAME);
+			if(outputfile.renameTo(newf) == false)
+				System.out.println("File Renameing Unsuccessful"); //$NON-NLS-1$
 		}
-		catch (FileNotFoundException e)
-		{
+		catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		catch (IOException e)
-		{
+		catch (IOException e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Unable to read/write the required Game files !! Press ok to continue");
+			JOptionPane.showMessageDialog(null, "Unable to read/write the required Game files !! Press ok to continue"); //$NON-NLS-1$
 		}
-		catch (ClassNotFoundException e) 
-		{
+		catch (ClassNotFoundException e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Game Data File Corrupted !! Click Ok to Continue Builing New File");
+			JOptionPane.showMessageDialog(null, "Game Data File Corrupted !! Click Ok to Continue Builing New File"); //$NON-NLS-1$
 		}
 		catch (Exception e)
 		{
-			
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Apologies, we couldn't get you started. Please retstart"); //$NON-NLS-1$
 		}
 	}
 }
