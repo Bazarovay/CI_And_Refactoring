@@ -354,7 +354,7 @@ public class Main extends JFrame implements MouseListener
     {
     	ListIterator<ChessboardCell> it = destlist.listIterator();
     	while(it.hasNext())
-    		it.next().setpossibledestination();
+    		it.next().setPossibleDestination();
     }
     
     
@@ -551,7 +551,7 @@ public class Main extends JFrame implements MouseListener
 			}
 			else if(this.c.getpiece()==null||this.previous.getpiece().getcolor()!=this.c.getpiece().getcolor())
 			{
-				if(this.c.ispossibledestination())
+				if(this.c.isPossibleDestination())
 				{
 					if(this.c.getpiece()!=null)
 						this.c.removePiece();
@@ -561,7 +561,7 @@ public class Main extends JFrame implements MouseListener
 					this.previous.removePiece();
 					if(getKing(this.chance^1).isindanger(this.boardState))
 					{
-						this.boardState[getKing(this.chance^1).getx()][getKing(this.chance^1).gety()].setcheck();
+						this.boardState[getKing(this.chance^1).getx()][getKing(this.chance^1).gety()].setCheck();
 						if (checkmate(getKing(this.chance^1).getcolor()))
 						{
 							this.previous.deselect();

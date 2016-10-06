@@ -17,29 +17,29 @@ public class ChessboardCell extends JPanel implements Cloneable{
 	private boolean destPossible;
 	private JLabel content;
 	private Piece piece;
-	int x,y;                             //is public because this is to be accessed by all the other class
+	int x;
+	int y;
 	private boolean isSelected = false;
 	private boolean ischeck=false;
 	
 	//Constructors
-	public ChessboardCell(int x,int y,Piece p)
-	{		
+	public ChessboardCell(int x,int y,Piece p) {		
 		this.x=x;
 		this.y=y;
 		
 		setLayout(new BorderLayout());
 	
-	 if((x+y)%2==0)
-	  setBackground(new Color(113,198,113));
-	
-	 else
+	 if((x+y)%2==0) {
+		 setBackground(new Color(113,198,113));
+	 } else {
 	  setBackground(Color.white);
+	 }
 	 
-	 if(p!=null)
+	 if(p!=null) {
 		 setPiece(p);
+	 }
 	}
 	
-	//A constructor that takes a cell as argument and returns a new cell will the same data but different reference
 	public ChessboardCell(ChessboardCell cell) throws CloneNotSupportedException
 	{
 		this.x=cell.x;
@@ -52,13 +52,12 @@ public class ChessboardCell extends JPanel implements Cloneable{
 		}
 		if(cell.getpiece()!=null) {
 			setPiece(cell.getpiece().getcopy());
-		}
-		else {
+		} else {
 			this.piece=null;
 		}
 	}
 	
-	public void setPiece(Piece piece)    //Function to inflate a cell with a piece
+	public void setPiece(Piece piece)
 	{
 		this.piece=piece;
 		ImageIcon img = new ImageIcon(this.getClass().getResource(piece.getPath()));
@@ -82,7 +81,7 @@ public class ChessboardCell extends JPanel implements Cloneable{
 		this.isSelected=true;
 	}
 	
-	public boolean isSelected()   //Function to return if the cell is under selection
+	public boolean isSelected()
 	{
 		return this.isSelected;
 	}
@@ -92,30 +91,30 @@ public class ChessboardCell extends JPanel implements Cloneable{
 		this.isSelected=false;
 	}
 	
-	public void setpossibledestination()     //Function to highlight a cell to indicate that it is a possible valid move
+	public void setPossibleDestination()
 	{
 		this.setBorder(BorderFactory.createLineBorder(Color.blue,4));
 		this.destPossible=true;
 	}
 	
-	public void removepossibledestination()      //Remove the cell from the list of possible moves
+	public void removepossibledestination()
 	{
 		this.setBorder(null);
 		this.destPossible=false;
 	}
 	
-	public boolean ispossibledestination()    //Function to check if the cell is a possible destination 
+	public boolean isPossibleDestination()
 	{
 		return this.destPossible;
 	}
 	
-	public void setcheck()     //Function to highlight the current cell as checked (For King)
+	public void setCheck()
 	{
 		this.setBackground(Color.RED);
 		this.ischeck=true;
 	}
 	
-	public void removecheck()   //Function to deselect check
+	public void removecheck()
 	{
 		this.setBorder(null);
 		if((x+y)%2==0) {
@@ -127,7 +126,7 @@ public class ChessboardCell extends JPanel implements Cloneable{
 		this.ischeck=false;
 	}
 	
-	public boolean ischeck()    //Function to check if the current cell is in check
+	public boolean ischeck()
 	{
 		return this.ischeck;
 	}
