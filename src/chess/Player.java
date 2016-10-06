@@ -33,8 +33,8 @@ public class Player implements Serializable{
 
 	public Player(String name) {
 		this.name = name.trim();
-		this.gamesplayed = new Integer(0);
-		this.gameswon = new Integer(0);
+		this.gamesplayed = Integer.valueOf(0);
+		this.gameswon = Integer.valueOf(0);
 	}
 	
 	public String getPlayerName()
@@ -54,7 +54,7 @@ public class Player implements Serializable{
 	
 	public Integer getWinPercentage()
 	{
-		return new Integer((this.gameswon*100)/this.gamesplayed);
+		return Integer.valueOf((this.gameswon*100)/this.gamesplayed);
 	}
 	
 	public void incrementGamesPlayed()
@@ -134,31 +134,32 @@ public class Player implements Serializable{
 		{
 			JOptionPane.showMessageDialog(null, "Read-Write Permission Denied !! Program Cannot Start"); //$NON-NLS-1$
 			System.exit(0);
-		} 
-		boolean playerdonotexist;
+			
+		}
+		
+		boolean playerDoesNotExist;
+		
 		try
 		{
-			if((null != outputfile) && outputfile.exists() == false)
+			if((null != outputfile) && outputfile.exists() == false) {
 				outputfile.createNewFile();
-			if((null != inputfile) && inputfile.exists()==false)
-			{
-					output = new ObjectOutputStream(new java.io.FileOutputStream(outputfile,true));
-					output.writeObject(this);
 			}
-			else
-			{
+			
+			if((null != inputfile) && inputfile.exists()==false) {
+					FileOutputStream stream = new FileOutputStream(outputfile);
+					output = new ObjectOutputStream(stream);
+					output.writeObject(this);
+			} else {
 				input = new ObjectInputStream(new FileInputStream(inputfile));
 				output = new ObjectOutputStream(new FileOutputStream(outputfile));
-				playerdonotexist=true;
-				try
-				{
-				while(true)
-				{
+				playerDoesNotExist=true;
+				try {
+				while(true) {
 					temp_player = (Player)input.readObject();
 					if (temp_player.getPlayerName().equals(getPlayerName()))
 					{
 						output.writeObject(this);
-						playerdonotexist = false;
+						playerDoesNotExist = false;
 					}
 					else
 						output.writeObject(temp_player);
@@ -167,17 +168,16 @@ public class Player implements Serializable{
 				catch(EOFException e){
 					input.close();
 				}
-				if(playerdonotexist) {
+				if(playerDoesNotExist) {
 					output.writeObject(this);
 				}
 			}
-			if (null != inputfile) {
+
 				inputfile.delete();
-			}
 
 			output.close();
 			File newf = new File(System.getProperty(USER_DIRECTORY)+ File.separator + PLAYER_FILE_NAME);
-			if((null != outputfile) && outputfile.renameTo(newf) == false)
+			if(outputfile.renameTo(newf) == false)
 				System.out.println("File Renameing Unsuccessful"); //$NON-NLS-1$
 		}
 		catch (FileNotFoundException e) {

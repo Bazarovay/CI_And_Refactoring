@@ -55,7 +55,7 @@ public class Main extends JFrame implements MouseListener
 	private JLabel label,mov;
 	private static JLabel CHNC;
 	private Time timer;
-	public static Main Mainboard;
+	static Main chessMainboard;
 	private boolean selected=false,end=false;
 	private Container content;
 	private ArrayList<Player> wplayer,bplayer;
@@ -63,14 +63,14 @@ public class Main extends JFrame implements MouseListener
 	private ArrayList<String> Bnames=new ArrayList<String>();
 	private JComboBox<String> wcombo,bcombo;
 	private String wname=null,bname=null,winner=null;
-	static String move;
+	static String move = null;
 	private Player tempPlayer;
 	private JScrollPane wscroll,bscroll;
 	private String[] WNames={},BNames={};
 	private JSlider timeSlider;
 	private BufferedImage image;
 	private Button start,wselect,bselect,WNewPlayer,BNewPlayer;
-	public static int timeRemaining=60;
+	static int timeRemaining=60;
 	public static void main(String[] args){
 	
 	//variable initialization
@@ -99,9 +99,9 @@ public class Main extends JFrame implements MouseListener
 	}
 	
 	//Setting up the board
-	Mainboard = new Main();
-	Mainboard.setVisible(true);	
-	Mainboard.setResizable(false);
+	chessMainboard = new Main();
+	chessMainboard.setVisible(true);	
+	chessMainboard.setResizable(false);
 	}
 	
 	//Constructor
@@ -321,10 +321,11 @@ public class Main extends JFrame implements MouseListener
 			this.timer.reset();
 			this.timer.start();
 			this.showPlayer.remove(CHNC);
-			if(Main.move=="White") //$NON-NLS-1$
-				Main.move="Black"; //$NON-NLS-1$
-			else
-				Main.move="White"; //$NON-NLS-1$
+			if(Main.move == "White") { //$NON-NLS-1$
+				Main.move = "Black"; //$NON-NLS-1$
+			} else {
+				Main.move = "White"; //$NON-NLS-1$
+			}
 			CHNC.setText(Main.move);
 			this.showPlayer.add(CHNC);
 		}
@@ -450,14 +451,13 @@ public class Main extends JFrame implements MouseListener
     //A function to check if the King is check-mate. The Game Ends if this function returns true.
     public boolean checkmate(int color)
     {
-    	ArrayList<ChessboardCell> dlist = new ArrayList<ChessboardCell>();
+    	ArrayList<ChessboardCell> dlist;
     	for(int i=0;i<8;i++)
     	{
     		for(int j=0;j<8;j++)
     		{
     			if (this.boardState[i][j].getpiece()!=null && this.boardState[i][j].getpiece().getcolor()==color)
     			{
-    				dlist.clear();
     				dlist=this.boardState[i][j].getpiece().move(this.boardState, i, j);
     				dlist=incheckfilter(dlist,this.boardState[i][j],color);
     				if(dlist.size()!=0)
@@ -505,11 +505,11 @@ public class Main extends JFrame implements MouseListener
 		this.wselect.enable();
 		this.bselect.enable();
 		this.end=true;
-		Mainboard.disable();
-		Mainboard.dispose();
-		Mainboard = new Main();
-		Mainboard.setVisible(true);
-		Mainboard.setResizable(false);
+		chessMainboard.disable();
+		chessMainboard.dispose();
+		chessMainboard = new Main();
+		chessMainboard.setVisible(true);
+		chessMainboard.setResizable(false);
     }
     
     //These are the abstract function of the parent class. Only relevant method here is the On-Click Fuction

@@ -431,7 +431,7 @@
   </association>  
   <association id="89">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="90" name="Mainboard">        
+      <attribute id="90" name="chessMainboard">        
         <position x="0" y="0" width="0" height="0"/>      
       </attribute>      
       <multiplicity id="91" minimum="0" maximum="1">        

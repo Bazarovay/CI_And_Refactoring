@@ -18,7 +18,7 @@ public class ChessboardCell extends JPanel implements Cloneable{
 	private JLabel content;
 	private Piece piece;
 	int x,y;                             //is public because this is to be accessed by all the other class
-	private boolean isSelected=false;
+	private boolean isSelected = false;
 	private boolean ischeck=false;
 	
 	//Constructors
@@ -66,39 +66,28 @@ public class ChessboardCell extends JPanel implements Cloneable{
 		this.add(this.content);
 	}
 	
-	public void removePiece()      //Function to remove a piece from the cell
-	{
-		if (this.piece instanceof King)
-		{
+	public void removePiece() {
 			this.piece=null;
 			this.remove(this.content);
-		}
-		else
-		{
-			this.piece=null;
-			this.remove(this.content);
-		}
+		
 	}
 	
 	
-	public Piece getpiece()    //Function to access piece of a particular cell
-	{
+	public Piece getpiece() {
 		return this.piece;
 	}
 	
-	public void select()       //Function to mark a cell indicating it's selection
-	{
+	public void select() {
 		this.setBorder(BorderFactory.createLineBorder(Color.red,6));
 		this.isSelected=true;
 	}
 	
-	public boolean isselected()   //Function to return if the cell is under selection
+	public boolean isSelected()   //Function to return if the cell is under selection
 	{
 		return this.isSelected;
 	}
 	
-	public void deselect()      //Function to delselect the cell
-	{
+	public void deselect() {
 		this.setBorder(null);
 		this.isSelected=false;
 	}
