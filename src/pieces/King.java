@@ -2,7 +2,7 @@ package pieces;
 
 import java.util.ArrayList;
 
-import chess.Cell;
+import chess.ChessboardCell;
 
 public class King extends Piece{
 	
@@ -36,7 +36,7 @@ public class King extends Piece{
 		return y;
 	}
 	//Move Function for King Overridden from Pieces
-	public ArrayList<Cell> move(Cell state[][],int x,int y)
+	public ArrayList<ChessboardCell> move(ChessboardCell state[][],int x,int y)
 	{
 		//King can move only one step. So all the adjacent 8 cells have been considered.
 		possiblemoves.clear();
@@ -53,7 +53,7 @@ public class King extends Piece{
 	
 	//Function to check if king is under threat
 	//It checks whether there is any piece of opposite color that can attack king for a given board state
-	public boolean isindanger(Cell state[][])
+	public boolean isindanger(ChessboardCell state[][])
     {
 		
 		//Checking for attack from left,right,up and down

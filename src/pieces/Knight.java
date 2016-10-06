@@ -2,7 +2,7 @@ package pieces;
 
 import java.util.ArrayList;
 
-import chess.Cell;
+import chess.ChessboardCell;
 
 /**
  * This is the Knight Class inherited from the Piece abstract class
@@ -22,7 +22,7 @@ public class Knight extends Piece{
 	//Move Function overridden
 	//There are at max 8 possible moves for a knight at any point of time.
 	//Knight moves only 2(1/2) steps
-	public ArrayList<Cell> move(Cell state[][],int x,int y)
+	public ArrayList<ChessboardCell> move(ChessboardCell state[][],int x,int y)
 	{
 		possiblemoves.clear();
 		int posx[]={x+1,x+1,x+2,x+2,x-1,x-1,x-2,x-2};
