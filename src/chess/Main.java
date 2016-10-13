@@ -107,46 +107,116 @@ public class Main extends JFrame implements MouseListener
 	//Constructor
 	private Main()
     {
-		timeRemaining=60;
-		timeSlider = new JSlider();
-		move="White";
-		wname=null;
-		bname=null;
-		winner=null;
-		board=new JPanel(new GridLayout(8,8));
-		wdetails=new JPanel(new GridLayout(3,3));
-		bdetails=new JPanel(new GridLayout(3,3));
-		bcombopanel=new JPanel();
-		wcombopanel=new JPanel();
-		Wnames=new ArrayList<String>();
-		Bnames=new ArrayList<String>();
+		setInitialData();
+		setTimeSliderDetails();		
+		fetchPlayerDetails();	
+		setControlPanel();
+		createWhitePlayerPanel();
+		createBlackPlayerPanel();
+		defineCells();
+		showPlayer=new JPanel(new FlowLayout());  
+		showPlayer.add(timeSlider);
+		initializeStart();
+		setTime();
+		handleInactiveLeftLayout();
+		setMinimumsizefordisplays();
+		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,temp, controlPanel);
+		content.add(split);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+	private void setMinimumsizefordisplays() {
 		board.setMinimumSize(new Dimension(800,700));
-		ImageIcon img = new ImageIcon(this.getClass().getResource("icon.png"));
-		this.setIconImage(img.getImage());
-		
-		//Time Slider Details
-		timeSlider.setMinimum(1);
-		timeSlider.setMaximum(15);
-		timeSlider.setValue(1);
-		timeSlider.setMajorTickSpacing(2);
-		timeSlider.setPaintLabels(true);
-		timeSlider.setPaintTicks(true);
-		timeSlider.addChangeListener(new TimeChange());
-		
-		
-		//Fetching Details of all Players
-		wplayer= Player.fetch_players();
-		Iterator<Player> witr=wplayer.iterator();
-		while(witr.hasNext())
-			Wnames.add(witr.next().name());
-				
-		bplayer= Player.fetch_players();
-		Iterator<Player> bitr=bplayer.iterator();
-		while(bitr.hasNext())
-			Bnames.add(bitr.next().name());
-	    WNames=Wnames.toArray(WNames);	
-		BNames=Bnames.toArray(BNames);
-		
+		temp.setMinimumSize(new Dimension(800,700));
+		controlPanel.setMinimumSize(new Dimension(285,700));
+	}
+
+	private void handleInactiveLeftLayout() {
+		temp=new JPanel(){
+			private static final long serialVersionUID = 1L;
+			     
+			@Override
+		    public void paintComponent(Graphics g) {
+				  try {
+			          image = ImageIO.read(this.getClass().getResource("clash.jpg"));
+			       } catch (IOException ex) {
+			            System.out.println("not found");
+			       }
+			   
+				g.drawImage(image, 0, 0, null);
+			}         
+	    };
+	}
+
+	private void setTime() {
+		JLabel setTime=new JLabel("Set Timer(in mins):"); 
+		setTime.setFont(new Font("Arial",Font.BOLD,16));
+		label = new JLabel("Time Starts now", JLabel.CENTER);
+		  label.setFont(new Font("SERIF", Font.BOLD, 30));
+	      displayTime=new JPanel(new FlowLayout());
+	      time=new JPanel(new GridLayout(3,3));
+	      time.add(setTime);
+	      time.add(showPlayer);
+	      displayTime.add(start);
+	      time.add(displayTime);
+	      controlPanel.add(time);
+	}
+
+	private void initializeStart() {
+		start=new Button("Start");
+		start.setBackground(Color.black);
+		start.setForeground(Color.white);
+	    start.addActionListener(new START());
+		start.setPreferredSize(new Dimension(120,40));
+	}
+
+	private void createWhitePlayerPanel() {
+		WhitePlayer=new JPanel();
+		WhitePlayer.setBorder(BorderFactory.createTitledBorder(null, "White Player", TitledBorder.TOP,TitledBorder.CENTER, new Font("times new roman",Font.BOLD,18), Color.RED));
+		WhitePlayer.setLayout(new BorderLayout());
+	    JPanel whitestats=new JPanel(new GridLayout(3,3));
+		wcombo=new JComboBox<String>(WNames);
+		wscroll=new JScrollPane(wcombo);
+		wcombopanel.setLayout(new FlowLayout());
+		wselect=new Button("Select");
+		wselect.addActionListener(new SelectHandler(0));
+		WNewPlayer=new Button("New Player");
+		WNewPlayer.addActionListener(new Handler(0));
+		wcombopanel.add(wscroll);
+		wcombopanel.add(wselect);
+		wcombopanel.add(WNewPlayer);
+		WhitePlayer.add(wcombopanel,BorderLayout.NORTH);
+		whitestats.add(new JLabel("Name   :"));
+		whitestats.add(new JLabel("Played :"));
+		whitestats.add(new JLabel("Won    :"));
+		WhitePlayer.add(whitestats,BorderLayout.WEST);
+		controlPanel.add(WhitePlayer);
+	}
+
+	private void createBlackPlayerPanel() {
+		BlackPlayer=new JPanel();
+		BlackPlayer.setBorder(BorderFactory.createTitledBorder(null, "Black Player", TitledBorder.TOP,TitledBorder.CENTER, new Font("times new roman",Font.BOLD,18), Color.BLUE));
+	    BlackPlayer.setLayout(new BorderLayout());
+		JPanel blackstats=new JPanel(new GridLayout(3,3));
+		bcombo=new JComboBox<String>(BNames);
+		bscroll=new JScrollPane(bcombo);
+		bcombopanel.setLayout(new FlowLayout());
+		bselect=new Button("Select");
+		bselect.addActionListener(new SelectHandler(1));
+		BNewPlayer=new Button("New Player");
+		BNewPlayer.addActionListener(new Handler(1));
+		bcombopanel.add(bscroll);
+		bcombopanel.add(bselect);
+		bcombopanel.add(BNewPlayer);
+		BlackPlayer.add(bcombopanel,BorderLayout.NORTH);
+		blackstats.add(new JLabel("Name   :"));
+		blackstats.add(new JLabel("Played :"));
+		blackstats.add(new JLabel("Won    :"));
+		BlackPlayer.add(blackstats,BorderLayout.WEST);
+		controlPanel.add(BlackPlayer);
+	}
+
+	private void setControlPanel() {
 		Cell cell;
 		board.setBorder(BorderFactory.createLoweredBevelBorder());
 		pieces.Piece P;
@@ -158,53 +228,25 @@ public class Main extends JFrame implements MouseListener
 		content.setLayout(new BorderLayout());
 		controlPanel.setLayout(new GridLayout(3,3));
 		controlPanel.setBorder(BorderFactory.createTitledBorder(null, "Statistics", TitledBorder.TOP,TitledBorder.CENTER, new Font("Lucida Calligraphy",Font.PLAIN,20), Color.ORANGE));
-		
-		//Defining the Player Box in Control Panel
-		WhitePlayer=new JPanel();
-		WhitePlayer.setBorder(BorderFactory.createTitledBorder(null, "White Player", TitledBorder.TOP,TitledBorder.CENTER, new Font("times new roman",Font.BOLD,18), Color.RED));
-		WhitePlayer.setLayout(new BorderLayout());
-		
-		BlackPlayer=new JPanel();
-		BlackPlayer.setBorder(BorderFactory.createTitledBorder(null, "Black Player", TitledBorder.TOP,TitledBorder.CENTER, new Font("times new roman",Font.BOLD,18), Color.BLUE));
-	    BlackPlayer.setLayout(new BorderLayout());
-		
-	    JPanel whitestats=new JPanel(new GridLayout(3,3));
-		JPanel blackstats=new JPanel(new GridLayout(3,3));
-		wcombo=new JComboBox<String>(WNames);
-		bcombo=new JComboBox<String>(BNames);
-		wscroll=new JScrollPane(wcombo);
-		bscroll=new JScrollPane(bcombo);
-		wcombopanel.setLayout(new FlowLayout());
-		bcombopanel.setLayout(new FlowLayout());
-		wselect=new Button("Select");
-		bselect=new Button("Select");
-		wselect.addActionListener(new SelectHandler(0));
-		bselect.addActionListener(new SelectHandler(1));
-		WNewPlayer=new Button("New Player");
-		BNewPlayer=new Button("New Player");
-		WNewPlayer.addActionListener(new Handler(0));
-		BNewPlayer.addActionListener(new Handler(1));
-		wcombopanel.add(wscroll);
-		wcombopanel.add(wselect);
-		wcombopanel.add(WNewPlayer);
-		bcombopanel.add(bscroll);
-		bcombopanel.add(bselect);
-		bcombopanel.add(BNewPlayer);
-		WhitePlayer.add(wcombopanel,BorderLayout.NORTH);
-		BlackPlayer.add(bcombopanel,BorderLayout.NORTH);
-		whitestats.add(new JLabel("Name   :"));
-		whitestats.add(new JLabel("Played :"));
-		whitestats.add(new JLabel("Won    :"));
-		blackstats.add(new JLabel("Name   :"));
-		blackstats.add(new JLabel("Played :"));
-		blackstats.add(new JLabel("Won    :"));
-		WhitePlayer.add(whitestats,BorderLayout.WEST);
-		BlackPlayer.add(blackstats,BorderLayout.WEST);
-		controlPanel.add(WhitePlayer);
-		controlPanel.add(BlackPlayer);
-		
-		
-		//Defining all the Cells
+	}
+
+	private void fetchPlayerDetails() {
+		wplayer= Player.fetch_players();
+		Iterator<Player> witr=wplayer.iterator();
+		while(witr.hasNext())
+			Wnames.add(witr.next().name());
+				
+		bplayer= Player.fetch_players();
+		Iterator<Player> bitr=bplayer.iterator();
+		while(bitr.hasNext())
+			Bnames.add(bitr.next().name());
+	    WNames=Wnames.toArray(WNames);	
+		BNames=Bnames.toArray(BNames);
+	}
+
+	private void defineCells() {
+		Cell cell;
+		pieces.Piece P;
 		boardState=new Cell[8][8];
 		for(int i=0;i<8;i++)
 			for(int j=0;j<8;j++)
@@ -251,49 +293,17 @@ public class Main extends JFrame implements MouseListener
 				board.add(cell);
 				boardState[i][j]=cell;
 			}
-		showPlayer=new JPanel(new FlowLayout());  
-		showPlayer.add(timeSlider);
-		JLabel setTime=new JLabel("Set Timer(in mins):"); 
-		start=new Button("Start");
-		start.setBackground(Color.black);
-		start.setForeground(Color.white);
-	    start.addActionListener(new START());
-		start.setPreferredSize(new Dimension(120,40));
-		setTime.setFont(new Font("Arial",Font.BOLD,16));
-		label = new JLabel("Time Starts now", JLabel.CENTER);
-		  label.setFont(new Font("SERIF", Font.BOLD, 30));
-	      displayTime=new JPanel(new FlowLayout());
-	      time=new JPanel(new GridLayout(3,3));
-	      time.add(setTime);
-	      time.add(showPlayer);
-	      displayTime.add(start);
-	      time.add(displayTime);
-	      controlPanel.add(time);
-		board.setMinimumSize(new Dimension(800,700));
-		
-		//The Left Layout When Game is inactive
-		temp=new JPanel(){
-			private static final long serialVersionUID = 1L;
-			     
-			@Override
-		    public void paintComponent(Graphics g) {
-				  try {
-			          image = ImageIO.read(this.getClass().getResource("clash.jpg"));
-			       } catch (IOException ex) {
-			            System.out.println("not found");
-			       }
-			   
-				g.drawImage(image, 0, 0, null);
-			}         
-	    };
+	}
 
-		temp.setMinimumSize(new Dimension(800,700));
-		controlPanel.setMinimumSize(new Dimension(285,700));
-		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,temp, controlPanel);
-		
-	    content.add(split);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-    }
+	private void setTimeSliderDetails() {
+		timeSlider.setMinimum(1);
+		timeSlider.setMaximum(15);
+		timeSlider.setValue(1);
+		timeSlider.setMajorTickSpacing(2);
+		timeSlider.setPaintLabels(true);
+		timeSlider.setPaintTicks(true);
+		timeSlider.addChangeListener(new TimeChange());
+	}
 	
 	// A function to change the chance from White Player to Black Player or vice verse
 	// It is made public because it is to be accessed in the Time Class
@@ -322,6 +332,26 @@ public class Main extends JFrame implements MouseListener
 			CHNC.setText(Main.move);
 			showPlayer.add(CHNC);
 		}
+	}
+	
+	private void setInitialData()
+	{
+		timeRemaining=60;
+		timeSlider = new JSlider();
+		move="White";
+		wname=null;
+		bname=null;
+		winner=null;
+		board=new JPanel(new GridLayout(8,8));
+		wdetails=new JPanel(new GridLayout(3,3));
+		bdetails=new JPanel(new GridLayout(3,3));
+		bcombopanel=new JPanel();
+		wcombopanel=new JPanel();
+		Wnames=new ArrayList<String>();
+		Bnames=new ArrayList<String>();
+		board.setMinimumSize(new Dimension(800,700));
+		ImageIcon img = new ImageIcon(this.getClass().getResource("icon.png"));
+		this.setIconImage(img.getImage());
 	}
 	
 	//A function to retrieve the Black King or White King
@@ -358,16 +388,16 @@ public class Main extends JFrame implements MouseListener
     		for(int j=0;j<8;j++)
     		{	try { newboardstate[i][j] = new Cell(boardState[i][j]);} catch (CloneNotSupportedException e){e.printStackTrace(); System.out.println("There is a problem with cloning !!"); }}
     	
-    	if(newboardstate[tocell.x][tocell.y].getpiece()!=null)
-			newboardstate[tocell.x][tocell.y].removePiece();
+    	if(newboardstate[tocell.xposition][tocell.yposition].getpiece()!=null)
+			newboardstate[tocell.xposition][tocell.yposition].removePiece();
     	
-		newboardstate[tocell.x][tocell.y].setPiece(newboardstate[fromcell.x][fromcell.y].getpiece());
-		if(newboardstate[tocell.x][tocell.y].getpiece() instanceof King)
+		newboardstate[tocell.xposition][tocell.yposition].setPiece(newboardstate[fromcell.xposition][fromcell.yposition].getpiece());
+		if(newboardstate[tocell.xposition][tocell.yposition].getpiece() instanceof King)
 		{
-			((King)(newboardstate[tocell.x][tocell.y].getpiece())).setx(tocell.x);
-			((King)(newboardstate[tocell.x][tocell.y].getpiece())).sety(tocell.y);
+			((King)(newboardstate[tocell.xposition][tocell.yposition].getpiece())).setx(tocell.xposition);
+			((King)(newboardstate[tocell.xposition][tocell.yposition].getpiece())).sety(tocell.yposition);
 		}
-		newboardstate[fromcell.x][fromcell.y].removePiece();
+		newboardstate[fromcell.xposition][fromcell.yposition].removePiece();
 		if (((King)(newboardstate[getKing(chance).getx()][getKing(chance).gety()].getpiece())).isindanger(newboardstate)==true)
 			return true;
 		else
@@ -388,19 +418,19 @@ public class Main extends JFrame implements MouseListener
         		{	try { newboardstate[i][j] = new Cell(boardState[i][j]);} catch (CloneNotSupportedException e){e.printStackTrace();}}
     		
     		Cell tempc = it.next();
-    		if(newboardstate[tempc.x][tempc.y].getpiece()!=null)
-    			newboardstate[tempc.x][tempc.y].removePiece();
-    		newboardstate[tempc.x][tempc.y].setPiece(newboardstate[fromcell.x][fromcell.y].getpiece());
+    		if(newboardstate[tempc.xposition][tempc.yposition].getpiece()!=null)
+    			newboardstate[tempc.xposition][tempc.yposition].removePiece();
+    		newboardstate[tempc.xposition][tempc.yposition].setPiece(newboardstate[fromcell.xposition][fromcell.yposition].getpiece());
     		x=getKing(chance).getx();
     		y=getKing(chance).gety();
-    		if(newboardstate[fromcell.x][fromcell.y].getpiece() instanceof King)
+    		if(newboardstate[fromcell.xposition][fromcell.yposition].getpiece() instanceof King)
     		{
-    			((King)(newboardstate[tempc.x][tempc.y].getpiece())).setx(tempc.x);
-    			((King)(newboardstate[tempc.x][tempc.y].getpiece())).sety(tempc.y);
-    			x=tempc.x;
-    			y=tempc.y;
+    			((King)(newboardstate[tempc.xposition][tempc.yposition].getpiece())).setx(tempc.xposition);
+    			((King)(newboardstate[tempc.xposition][tempc.yposition].getpiece())).sety(tempc.yposition);
+    			x=tempc.xposition;
+    			y=tempc.yposition;
     		}
-    		newboardstate[fromcell.x][fromcell.y].removePiece();
+    		newboardstate[fromcell.xposition][fromcell.yposition].removePiece();
     		if ((((King)(newboardstate[x][y].getpiece())).isindanger(newboardstate)==false))
     			newlist.add(tempc);
     	}
@@ -420,19 +450,19 @@ public class Main extends JFrame implements MouseListener
         		for(int j=0;j<8;j++)
         		{	try { newboardstate[i][j] = new Cell(boardState[i][j]);} catch (CloneNotSupportedException e){e.printStackTrace();}}
     		Cell tempc = it.next();
-    		if(newboardstate[tempc.x][tempc.y].getpiece()!=null)
-    			newboardstate[tempc.x][tempc.y].removePiece();
-    		newboardstate[tempc.x][tempc.y].setPiece(newboardstate[fromcell.x][fromcell.y].getpiece());
+    		if(newboardstate[tempc.xposition][tempc.yposition].getpiece()!=null)
+    			newboardstate[tempc.xposition][tempc.yposition].removePiece();
+    		newboardstate[tempc.xposition][tempc.yposition].setPiece(newboardstate[fromcell.xposition][fromcell.yposition].getpiece());
     		x=getKing(color).getx();
     		y=getKing(color).gety();
-    		if(newboardstate[tempc.x][tempc.y].getpiece() instanceof King)
+    		if(newboardstate[tempc.xposition][tempc.yposition].getpiece() instanceof King)
     		{
-    			((King)(newboardstate[tempc.x][tempc.y].getpiece())).setx(tempc.x);
-    			((King)(newboardstate[tempc.x][tempc.y].getpiece())).sety(tempc.y);
-    			x=tempc.x;
-    			y=tempc.y;
+    			((King)(newboardstate[tempc.xposition][tempc.yposition].getpiece())).setx(tempc.xposition);
+    			((King)(newboardstate[tempc.xposition][tempc.yposition].getpiece())).sety(tempc.yposition);
+    			x=tempc.xposition;
+    			y=tempc.yposition;
     		}
-    		newboardstate[fromcell.x][fromcell.y].removePiece();
+    		newboardstate[fromcell.xposition][fromcell.yposition].removePiece();
     		if ((((King)(newboardstate[x][y].getpiece())).isindanger(newboardstate)==false))
     			newlist.add(tempc);
     	}
@@ -520,7 +550,7 @@ public class Main extends JFrame implements MouseListener
 				c.select();
 				previous=c;
 				destinationlist.clear();
-				destinationlist=c.getpiece().move(boardState, c.x, c.y);
+				destinationlist=c.getpiece().move(boardState, c.xposition, c.yposition);
 				if(c.getpiece() instanceof King)
 					destinationlist=filterdestination(destinationlist,c);
 				else
@@ -535,7 +565,7 @@ public class Main extends JFrame implements MouseListener
 		}
 		else
 		{
-			if(c.x==previous.x && c.y==previous.y)
+			if(c.xposition==previous.xposition && c.yposition==previous.yposition)
 			{
 				c.deselect();
 				cleandestinations(destinationlist);
@@ -567,8 +597,8 @@ public class Main extends JFrame implements MouseListener
 						boardState[getKing(chance).getx()][getKing(chance).gety()].removecheck();
 					if(c.getpiece() instanceof King)
 					{
-						((King)c.getpiece()).setx(c.x);
-						((King)c.getpiece()).sety(c.y);
+						((King)c.getpiece()).setx(c.xposition);
+						((King)c.getpiece()).sety(c.yposition);
 					}
 					changechance();
 					if(!end)
@@ -592,7 +622,7 @@ public class Main extends JFrame implements MouseListener
 				destinationlist.clear();
 				c.select();
 				previous=c;
-				destinationlist=c.getpiece().move(boardState, c.x, c.y);
+				destinationlist=c.getpiece().move(boardState, c.xposition, c.yposition);
 				if(c.getpiece() instanceof King)
 					destinationlist=filterdestination(destinationlist,c);
 				else
@@ -607,8 +637,8 @@ public class Main extends JFrame implements MouseListener
 		}
 		if(c.getpiece()!=null && c.getpiece() instanceof King)
 		{
-			((King)c.getpiece()).setx(c.x);
-			((King)c.getpiece()).sety(c.y);
+			((King)c.getpiece()).setx(c.xposition);
+			((King)c.getpiece()).sety(c.yposition);
 		}
 	}
     
