@@ -107,6 +107,158 @@ public class Main extends JFrame implements MouseListener
 	//Constructor
 	private Main()
     {
+		initializeData();
+		setTimeSliderDetails();
+		fetchPlayerDetails();
+		setControlPanel();
+		createWhitePlayerPanel();
+		createBlackPlayerPanel();
+		setPiecesPosition();
+		this.showPlayer=new JPanel(new FlowLayout());  
+		this.showPlayer.add(this.timeSlider);
+		initializeStart();
+		setTimeMethod();
+		handleInactiveLeftLayout();
+		setMinimumsizefordisplays();
+		this.split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,this.temp, this.controlPanel);	
+	    this.content.add(this.split);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+	private void setMinimumsizefordisplays() {
+		this.board.setMinimumSize(new Dimension(800,700));
+		this.temp.setMinimumSize(new Dimension(800,700));
+		this.controlPanel.setMinimumSize(new Dimension(285,700));
+	}
+
+	private void handleInactiveLeftLayout() {
+		//The Left Layout When Game is inactive
+		this.temp=new JPanel(){
+			private static final long serialVersionUID = 1L;
+			     
+			@Override
+		    public void paintComponent(Graphics g) {
+				  try {
+			          Main.this.image = ImageIO.read(this.getClass().getResource("clash.jpg")); //$NON-NLS-1$
+			       } catch (IOException ex) {
+			            System.out.println("not found"); //$NON-NLS-1$
+			       }
+			   
+				g.drawImage(Main.this.image, 0, 0, null);
+			}         
+	    };
+	}
+
+	private void setTimeMethod() {
+		JLabel setTime=new JLabel("Set Timer(in mins):");  //$NON-NLS-1$
+		setTime.setFont(new Font("Arial",Font.BOLD,16)); //$NON-NLS-1$
+		this.label = new JLabel("Time Starts now", JLabel.CENTER); //$NON-NLS-1$
+		  this.label.setFont(new Font("SERIF", Font.BOLD, 30)); //$NON-NLS-1$
+	      this.displayTime=new JPanel(new FlowLayout());
+	      this.time=new JPanel(new GridLayout(3,3));
+	      this.time.add(setTime);
+	      this.time.add(this.showPlayer);
+	      this.displayTime.add(this.start);
+	      this.time.add(this.displayTime);
+	      this.controlPanel.add(this.time);
+	}
+
+	private void initializeStart() {
+		this.start=new Button("Start"); //$NON-NLS-1$
+		this.start.setBackground(Color.black);
+		this.start.setForeground(Color.white);
+	    this.start.addActionListener(new START());
+		this.start.setPreferredSize(new Dimension(120,40));
+	}
+
+	private void createBlackPlayerPanel() {
+		this.BlackPlayer=new JPanel();
+		this.BlackPlayer.setBorder(BorderFactory.createTitledBorder(null, "Black Player", TitledBorder.TOP,TitledBorder.CENTER, new Font("times new roman",Font.BOLD,18), Color.BLUE)); //$NON-NLS-1$ //$NON-NLS-2$
+	    this.BlackPlayer.setLayout(new BorderLayout());
+		JPanel blackstats=new JPanel(new GridLayout(3,3));
+		this.bcombo=new JComboBox<String>(this.BNames);
+		this.bscroll=new JScrollPane(this.bcombo);
+		this.bcombopanel.setLayout(new FlowLayout());
+		this.bselect=new Button("Select"); //$NON-NLS-1$
+		this.bselect.addActionListener(new SelectHandler(1));
+		this.BNewPlayer=new Button("New Player"); //$NON-NLS-1$
+		this.BNewPlayer.addActionListener(new Handler(1));
+		this.bcombopanel.add(this.bscroll);
+		this.bcombopanel.add(this.bselect);
+		this.bcombopanel.add(this.BNewPlayer);
+		this.BlackPlayer.add(this.bcombopanel,BorderLayout.NORTH);
+		blackstats.add(new JLabel("Name   :")); //$NON-NLS-1$
+		blackstats.add(new JLabel("Played :")); //$NON-NLS-1$
+		blackstats.add(new JLabel("Won    :")); //$NON-NLS-1$
+		this.BlackPlayer.add(blackstats,BorderLayout.WEST);
+		this.controlPanel.add(this.BlackPlayer);
+	}
+
+	private void createWhitePlayerPanel() {
+		//Defining the Player Box in Control Panel
+		this.WhitePlayer=new JPanel();
+		this.WhitePlayer.setBorder(BorderFactory.createTitledBorder(null, "White Player", TitledBorder.TOP,TitledBorder.CENTER, new Font("times new roman",Font.BOLD,18), Color.RED)); //$NON-NLS-1$ //$NON-NLS-2$
+		this.WhitePlayer.setLayout(new BorderLayout());
+	    JPanel whitestats=new JPanel(new GridLayout(3,3));
+		this.wcombo=new JComboBox<String>(this.WNames);
+		this.wscroll=new JScrollPane(this.wcombo);
+		this.wcombopanel.setLayout(new FlowLayout());
+		this.wselect=new Button("Select"); //$NON-NLS-1$
+		this.wselect.addActionListener(new SelectHandler(0));
+		this.WNewPlayer=new Button("New Player"); //$NON-NLS-1$
+		this.WNewPlayer.addActionListener(new Handler(0));
+		this.wcombopanel.add(this.wscroll);
+		this.wcombopanel.add(this.wselect);
+		this.wcombopanel.add(this.WNewPlayer);
+		this.WhitePlayer.add(this.wcombopanel,BorderLayout.NORTH);
+		whitestats.add(new JLabel("Name   :")); //$NON-NLS-1$
+		whitestats.add(new JLabel("Played :")); //$NON-NLS-1$
+		whitestats.add(new JLabel("Won    :")); //$NON-NLS-1$
+		this.WhitePlayer.add(whitestats,BorderLayout.WEST);
+		this.controlPanel.add(this.WhitePlayer);
+	}
+
+	private void setControlPanel() {
+		ChessboardCell cell;
+		this.board.setBorder(BorderFactory.createLoweredBevelBorder());
+		pieces.Piece P;
+		this.content=getContentPane();
+		setSize(BOARD_WIDTH,BOARD_HEIGHT);
+		setTitle("Chess"); //$NON-NLS-1$
+		this.content.setBackground(Color.black);
+		this.controlPanel=new JPanel();
+		this.content.setLayout(new BorderLayout());
+		this.controlPanel.setLayout(new GridLayout(3,3));
+		this.controlPanel.setBorder(BorderFactory.createTitledBorder(null, "Statistics", TitledBorder.TOP,TitledBorder.CENTER, new Font("Lucida Calligraphy",Font.PLAIN,20), Color.ORANGE)); //$NON-NLS-1$ //$NON-NLS-2$
+	}
+
+	private void fetchPlayerDetails() {
+		//Fetching Details of all Players
+		this.wplayer= Player.fetch_players();
+		Iterator<Player> witr=this.wplayer.iterator();
+		while(witr.hasNext())
+			this.Wnames.add(witr.next().getPlayerName());
+				
+		this.bplayer= Player.fetch_players();
+		Iterator<Player> bitr=this.bplayer.iterator();
+		while(bitr.hasNext())
+			this.Bnames.add(bitr.next().getPlayerName());
+	    this.WNames=this.Wnames.toArray(this.WNames);	
+		this.BNames=this.Bnames.toArray(this.BNames);
+	}
+
+	private void setTimeSliderDetails() {
+		//Time Slider Details
+		this.timeSlider.setMinimum(1);
+		this.timeSlider.setMaximum(15);
+		this.timeSlider.setValue(1);
+		this.timeSlider.setMajorTickSpacing(2);
+		this.timeSlider.setPaintLabels(true);
+		this.timeSlider.setPaintTicks(true);
+		this.timeSlider.addChangeListener(new TimeChange());
+	}
+
+	private void initializeData() {
 		timeRemaining=60;
 		this.timeSlider = new JSlider();
 		move="White"; //$NON-NLS-1$
@@ -123,131 +275,7 @@ public class Main extends JFrame implements MouseListener
 		this.board.setMinimumSize(new Dimension(800,700));
 		ImageIcon img = new ImageIcon(this.getClass().getResource("icon.png")); //$NON-NLS-1$
 		this.setIconImage(img.getImage());
-		
-		//Time Slider Details
-		this.timeSlider.setMinimum(1);
-		this.timeSlider.setMaximum(15);
-		this.timeSlider.setValue(1);
-		this.timeSlider.setMajorTickSpacing(2);
-		this.timeSlider.setPaintLabels(true);
-		this.timeSlider.setPaintTicks(true);
-		this.timeSlider.addChangeListener(new TimeChange());
-		
-		
-		//Fetching Details of all Players
-		this.wplayer= Player.fetch_players();
-		Iterator<Player> witr=this.wplayer.iterator();
-		while(witr.hasNext())
-			this.Wnames.add(witr.next().getPlayerName());
-				
-		this.bplayer= Player.fetch_players();
-		Iterator<Player> bitr=this.bplayer.iterator();
-		while(bitr.hasNext())
-			this.Bnames.add(bitr.next().getPlayerName());
-	    this.WNames=this.Wnames.toArray(this.WNames);	
-		this.BNames=this.Bnames.toArray(this.BNames);
-		
-		ChessboardCell cell;
-		this.board.setBorder(BorderFactory.createLoweredBevelBorder());
-		pieces.Piece P;
-		this.content=getContentPane();
-		setSize(BOARD_WIDTH,BOARD_HEIGHT);
-		setTitle("Chess"); //$NON-NLS-1$
-		this.content.setBackground(Color.black);
-		this.controlPanel=new JPanel();
-		this.content.setLayout(new BorderLayout());
-		this.controlPanel.setLayout(new GridLayout(3,3));
-		this.controlPanel.setBorder(BorderFactory.createTitledBorder(null, "Statistics", TitledBorder.TOP,TitledBorder.CENTER, new Font("Lucida Calligraphy",Font.PLAIN,20), Color.ORANGE)); //$NON-NLS-1$ //$NON-NLS-2$
-		
-		//Defining the Player Box in Control Panel
-		this.WhitePlayer=new JPanel();
-		this.WhitePlayer.setBorder(BorderFactory.createTitledBorder(null, "White Player", TitledBorder.TOP,TitledBorder.CENTER, new Font("times new roman",Font.BOLD,18), Color.RED)); //$NON-NLS-1$ //$NON-NLS-2$
-		this.WhitePlayer.setLayout(new BorderLayout());
-		
-		this.BlackPlayer=new JPanel();
-		this.BlackPlayer.setBorder(BorderFactory.createTitledBorder(null, "Black Player", TitledBorder.TOP,TitledBorder.CENTER, new Font("times new roman",Font.BOLD,18), Color.BLUE)); //$NON-NLS-1$ //$NON-NLS-2$
-	    this.BlackPlayer.setLayout(new BorderLayout());
-		
-	    JPanel whitestats=new JPanel(new GridLayout(3,3));
-		JPanel blackstats=new JPanel(new GridLayout(3,3));
-		this.wcombo=new JComboBox<String>(this.WNames);
-		this.bcombo=new JComboBox<String>(this.BNames);
-		this.wscroll=new JScrollPane(this.wcombo);
-		this.bscroll=new JScrollPane(this.bcombo);
-		this.wcombopanel.setLayout(new FlowLayout());
-		this.bcombopanel.setLayout(new FlowLayout());
-		this.wselect=new Button("Select"); //$NON-NLS-1$
-		this.bselect=new Button("Select"); //$NON-NLS-1$
-		this.wselect.addActionListener(new SelectHandler(0));
-		this.bselect.addActionListener(new SelectHandler(1));
-		this.WNewPlayer=new Button("New Player"); //$NON-NLS-1$
-		this.BNewPlayer=new Button("New Player"); //$NON-NLS-1$
-		this.WNewPlayer.addActionListener(new Handler(0));
-		this.BNewPlayer.addActionListener(new Handler(1));
-		this.wcombopanel.add(this.wscroll);
-		this.wcombopanel.add(this.wselect);
-		this.wcombopanel.add(this.WNewPlayer);
-		this.bcombopanel.add(this.bscroll);
-		this.bcombopanel.add(this.bselect);
-		this.bcombopanel.add(this.BNewPlayer);
-		this.WhitePlayer.add(this.wcombopanel,BorderLayout.NORTH);
-		this.BlackPlayer.add(this.bcombopanel,BorderLayout.NORTH);
-		whitestats.add(new JLabel("Name   :")); //$NON-NLS-1$
-		whitestats.add(new JLabel("Played :")); //$NON-NLS-1$
-		whitestats.add(new JLabel("Won    :")); //$NON-NLS-1$
-		blackstats.add(new JLabel("Name   :")); //$NON-NLS-1$
-		blackstats.add(new JLabel("Played :")); //$NON-NLS-1$
-		blackstats.add(new JLabel("Won    :")); //$NON-NLS-1$
-		this.WhitePlayer.add(whitestats,BorderLayout.WEST);
-		this.BlackPlayer.add(blackstats,BorderLayout.WEST);
-		this.controlPanel.add(this.WhitePlayer);
-		this.controlPanel.add(this.BlackPlayer);
-		
-		setPiecesPosition();
-		
-		this.showPlayer=new JPanel(new FlowLayout());  
-		this.showPlayer.add(this.timeSlider);
-		JLabel setTime=new JLabel("Set Timer(in mins):");  //$NON-NLS-1$
-		this.start=new Button("Start"); //$NON-NLS-1$
-		this.start.setBackground(Color.black);
-		this.start.setForeground(Color.white);
-	    this.start.addActionListener(new START());
-		this.start.setPreferredSize(new Dimension(120,40));
-		setTime.setFont(new Font("Arial",Font.BOLD,16)); //$NON-NLS-1$
-		this.label = new JLabel("Time Starts now", JLabel.CENTER); //$NON-NLS-1$
-		  this.label.setFont(new Font("SERIF", Font.BOLD, 30)); //$NON-NLS-1$
-	      this.displayTime=new JPanel(new FlowLayout());
-	      this.time=new JPanel(new GridLayout(3,3));
-	      this.time.add(setTime);
-	      this.time.add(this.showPlayer);
-	      this.displayTime.add(this.start);
-	      this.time.add(this.displayTime);
-	      this.controlPanel.add(this.time);
-		this.board.setMinimumSize(new Dimension(800,700));
-		
-		//The Left Layout When Game is inactive
-		this.temp=new JPanel(){
-			private static final long serialVersionUID = 1L;
-			     
-			@Override
-		    public void paintComponent(Graphics g) {
-				  try {
-			          Main.this.image = ImageIO.read(this.getClass().getResource("clash.jpg")); //$NON-NLS-1$
-			       } catch (IOException ex) {
-			            System.out.println("not found"); //$NON-NLS-1$
-			       }
-			   
-				g.drawImage(Main.this.image, 0, 0, null);
-			}         
-	    };
-
-		this.temp.setMinimumSize(new Dimension(800,700));
-		this.controlPanel.setMinimumSize(new Dimension(285,700));
-		this.split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,this.temp, this.controlPanel);
-		
-	    this.content.add(this.split);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-    }
+	}
 
 	private void setPiecesPosition() {
 		ChessboardCell cell;
