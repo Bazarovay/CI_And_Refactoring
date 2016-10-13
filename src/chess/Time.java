@@ -23,7 +23,7 @@ public class Time
     {
        countdownTimer = new Timer(1000, new CountdownTimerListener());
        this.label = passedLabel;
-       this.timeRemaining=Main.timeRemaining;
+       getTimeRemaining();
     }
     
     //A function that starts the timer
@@ -32,10 +32,15 @@ public class Time
     	countdownTimer.start();
     }
     
+    public void getTimeRemaining()
+    {
+    	this.timeRemaining = Main.timeRemaining;
+    }
     //A function that resets the timer
     public void reset()
     {
-    	this.timeRemaining=Main.timeRemaining;
+    	
+    	getTimeRemaining();
     }
     
     //A function that is called after every second. It updates the timer and takes other necessary actions
